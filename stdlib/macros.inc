@@ -54,10 +54,10 @@ mStr: .asciiz %str
 	move %reg, $v0
 .end_macro
 
-.macro syscall_get_intMem (%addr)
+.macro syscall_get_intMem (%x)
 	li $v0, 5
 	syscall
-	sw $v0, %addr
+	sw $v0, %x
 .end_macro
 
 .macro syscall_get_strMem (%strPtr, %buf_size)
