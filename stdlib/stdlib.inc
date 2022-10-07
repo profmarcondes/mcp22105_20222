@@ -87,7 +87,7 @@ memcpy:
 		sw   $t0, 0($a1)
 		addi $a0, $a0, 4
 		addi $a1, $a1, 4
-	j mempcy_L0
+	j memcpy_L0
   memcpy_L0_end:
   memcpy_L1:
   beq $a2, $zero, memcpy_L1_end
@@ -96,6 +96,37 @@ memcpy:
 		sb   $t0, 0($a1)
 		addi $a0, $a0, 1
 		addi $a1, $a1, 1
-	j mempcy_L1
+	j memcpy_L1
 	memcpy_L1_end:
   jr $ra
+#########################################################
+# Paridade de uma palavra pode ser definida como par ou 
+# ímpar, de acordo com a quantidade de bits “1” presentes 
+# na palavra. Por exemplo, a palavra 0b0110 possui 
+# paridade par, pois possui 2 bits ativados, enquanto que 
+# a palavra 0b1110 possui paridade ímpar uma vez que possui 
+# 3 bits ativados. Projete um programa em linguagem assembly 
+# do MIPS para calcular a paridade da palavra presente no 
+# endereço de memória 0x10018000. Armazene o valor 0x01 
+# caso a paridade seja par, ou 0x02 caso seja ímpar no 
+# endereço de memória 0x10018004.
+#
+# Utilize chamadas de sistemas para inicializar o valor 
+# inicial da palavra armazenada no endereço 0x10018000.
+#
+#########################################################
+# int paridade(int value)
+paridade:
+	li $v0, 0 # contador
+paridade_L0:
+	beq $a0, $zero, paridade_L0_end
+		bgtz $a0, paridade_skip
+			addi $v0, $v0, 1 # numero neg. -> bit 31 = 1
+		paridade_skip:
+		sll $a0, $a0, 1
+	j paridade_L0
+paridade_L0_end:
+	andi $v0, $v0, 1
+	addi $v0, $v0, 1
+	jr $ra	
+

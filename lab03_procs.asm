@@ -41,6 +41,8 @@ main:
 		syscall_print_str("Valor não encontrado!\n")
 	main_IF0_end:
 	
+	
+	
 
 
 	syscall_exit
