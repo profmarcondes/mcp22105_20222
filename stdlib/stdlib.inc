@@ -128,5 +128,87 @@ paridade_L0:
 paridade_L0_end:
 	andi $v0, $v0, 1
 	addi $v0, $v0, 1
-	jr $ra	
+	jr $ra
+	
+#############################################	
+# int strResize(char * str, int size);
+#
+#  O procedimento deve modificar o tamanho da string
+# de acordo com o tamanho especificado pelo parâmetro
+# size. O size deve ser sempre menor que o tamanho
+# atual da string.
+#
+#  O procedimento retorna o valor -1, caso o size seja
+# maior que o tamanho da string, ou o novo tamanho da
+# string, caso contrário, ou seja, o próprio valor de
+# size.
+# ...
+#-----------------
+#  $a1 (strResize)  12($sp)
+#-----------------
+#  $a0 (strResize)  8($sp)
+#=================
+#  $ra              4($sp)
+#-----------------
+#  $a0 (strlen)     0($sp)
+#-----------------
+strResize:
+	addi $sp, $sp, -8  # Crio o stack frame
+	sw	$a1,  12($sp)
+	sw  $a0,   8($sp)
+	sw  $ra,   4($sp)  
+	
+	jal strlen
+	move $t0, $v0
+	lw   $a0, 8($sp)
+	lw   $a1, 12($sp)
+	
+	blt $a1, $t0, strResize_IF0_then
+		li $v0, -1 
+		j strResize_end
+strResize_IF0_then:  # Se for fazer o resize
+		add $a0, $a0, $a1
+		sb  $zero, 0($a0)
+		move $v0, $a1
+strResize_end:
 
+	lw $ra, 4($sp)    # Restauro valor de $ra
+	addi $sp, $sp, 8  # Destruo o quadro de pilha
+
+	jr $ra
+#############################################
+
+###############################################
+# unsigned int fatorial(unsigned int n){ 
+#     if(n == 0) {
+#         return 1; 
+#     } else {
+#         return n * fatorial(n-1); 
+#     }
+# }
+#
+#-----------------
+#  $a0  (chamou fatorial) 8($sp)
+#=================
+#  $ra              4($sp)
+#-----------------
+#  $a0              0($sp)
+#-----------------
+###############################################
+fatorial:
+	addi $sp, $sp, -8
+	sw   $ra, 4($sp)
+	
+	li $v0, 1
+	beq $a0, $zero, fatorial_end
+	sw   $a0, 8($sp)  # salvo $a0 na pilha de quem chamou fatorial
+	addi $a0, $a0, -1
+	jal fatorial
+	lw   $a0, 8($sp)  # restauro o valor antigo de $a0
+	mul  $v0, $a0, $v0
+	
+fatorial_end:
+	lw   $ra, 4($sp)
+	addi $sp, $sp, 8
+  jr $ra
+###############################################
