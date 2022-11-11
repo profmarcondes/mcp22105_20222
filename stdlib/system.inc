@@ -1,5 +1,6 @@
 .include "macros.inc"
 .include "stdlib.inc"
+.include "kernel.inc"
 
 .eqv STACK_INIT 0x7FFFEFFC
 
