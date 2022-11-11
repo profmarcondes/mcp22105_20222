@@ -1,5 +1,6 @@
 .kdata
 exception_msg: .asciiz "\n\n Ocorreu uma exceção!!!\n\n"
+.align 2
 k_save_regs: .space 12
 
 .ktext 0x80000180
