@@ -1,4 +1,3 @@
-
 .eqv RB_MAX_SIZE 16
 
 .text
@@ -64,7 +63,7 @@ rb_read:
 	
 	lw   $t0, 4($a0)   # rbuf->rd
 	add  $t1, $t0, $a0 #
-	lw   $v0, 12($t1)  # tmp = rbuf->buf[rbuf->rd];
+	lb   $v0, 12($t1)  # tmp = rbuf->buf[rbuf->rd];
 	
 	addi $t0, $t0, 1            # rbuf->rd++
 	rem  $t0, $t0, RB_MAX_SIZE  # rbuf->rd++ % RB_MAX_SIZE
@@ -82,3 +81,21 @@ rb_read_end:
 #	}
 #	return 0;
 # }
+rb_write:
+	move $v0, $zero
+	lw   $t0, 0($a0)
+	beq  $t0, RB_MAX_SIZE, rb_write_end
+	
+	addi $t0, $t0, 1
+	sw   $t0, 0($a0)   # rbuf->size++
+	
+	lw   $t0, 8($a0)   # rbuf->wr
+	add  $t1, $t0, $a0 #
+	sb   $a1, 12($t1)  # rbuf->buf[rbuf->wr] = byte;
+	
+	addi $t0, $t0, 1            # rbuf->wr++
+	rem  $t0, $t0, RB_MAX_SIZE  # rbuf->wr++ % RB_MAX_SIZE
+	sw   $t0, 8($a0)            #
+	
+rb_write_end:
+	jr $ra

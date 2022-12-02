@@ -82,8 +82,10 @@ exception_handler_Hardware:
 	# Hardware Interrupt
 	la   $t0, getchar
 	jalr $t0
-	move $a0, $v0
-	la   $t0, putchar
+	
+	move $a1, $v0
+	la   $a0, key_rb
+	la   $t0, rb_write
 	jalr $t0
 	
 exception_handler_Done:

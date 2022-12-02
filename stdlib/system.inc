@@ -1,14 +1,21 @@
 .include "macros.inc"
 .include "stdlib.inc"
+.include "ringbuffer.inc"
 .include "kernel.inc"
 
 .eqv STACK_INIT 0x7FFFEFFC
+
+.data
+.align 2
+key_rb: .space 28
 
 .text 0x00400000 ## System Init Code
 init:
 	la $sp, STACK_INIT
 	
-	jal enable_keyboard_int
+	la   $a0, key_rb
+	jal  rb_init
+	jal  enable_keyboard_int
 	
 	jal main
 	syscall_exit

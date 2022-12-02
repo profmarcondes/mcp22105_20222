@@ -238,4 +238,42 @@ putchar_L0:
 
   jr $ra
 ###############################################
+# unsigned int fib(unsigned int n) 
+####
+# old_stak ($a0) <- 16($sp)
+#---------------
+# <empty>	     <- 12($sp)
+#---------------
+#  $ra			 <- 8($sp)
+#---------------
+#  $s0			 <- 4($sp)
+#---------------
+#  $a0			 <- 0($sp)
+#---------------
+fib:
+	addiu $sp, $sp, -16
+	sw    $s0, 4($sp)
+	sw    $ra, 8($sp)
+	sw    $a0, 16($sp)
+
+	move $v0, $a0
+	blt  $a0, 2, fib_end	
+	
+	addi $a0, $a0, -1
+	jal  fib
+	move $s0, $v0
+	
+	lw   $a0, 16($sp)
+	addi $a0, $a0, -2
+	jal  fib
+	add  $v0, $s0, $v0
+	
+fib_end:
+	lw    $s0, 4($sp)
+	lw    $ra, 8($sp)
+	addiu $sp, $sp, 16
+	jr $ra
+
+
+
 
