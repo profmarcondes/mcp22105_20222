@@ -12,11 +12,11 @@
 .eqv GRID_COLS 35
 
 # struct animated_sprite {
-# 	int ID;
-# 	int pos_X;
-#	int pos_Y;
-#	int mov_X;
-#	int mov_Y;
+# 	int ID;      ## 0
+# 	int pos_X;   ## 4
+#	int pos_Y;   ## 8
+#	int mov_X;   ## 12
+#	int mov_Y;   ## 16
 # }
 .macro animated_sprite (%name, %id, %pos_x, %pos_y, %mov_x, %mov_y)
 .data
