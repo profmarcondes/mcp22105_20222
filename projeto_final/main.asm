@@ -1,12 +1,7 @@
 .include "system.inc"
 
-animated_sprite(pacman, 3, 128, 128, 0, 0) 
-
-.data
-move_vector:
-	.word 0   #  valid
-    .word 0   #  x_mov 
-    .word 0   #  y_mov
+animated_sprite(pacman, 3, 119, 140, 0, 0) 
+mov_vector(input_mov)
 
 .text 0x00401000
 
@@ -31,12 +26,12 @@ main_L0:
 	jal apply_movement
 	
 	## Busca no teclado se há comando do user
-	la  $a0, move_vector
+	la  $a0, input_move
 	jal process_input
 	
 	## Tenta mudar o movimento se for possível
 	la  $a0, pacman
-	la  $a1, move_vector
+	la  $a1, input_move
 	jal try_change_movement
 	
 main_sleep:

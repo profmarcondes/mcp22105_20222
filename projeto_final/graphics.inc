@@ -29,6 +29,20 @@
 	.word %mov_y
 .end_macro
 
+# struct mov_vector {
+#    int valid;  ## 0
+#    int mov_x;  ## 4
+#    int mov_y;  ## 8
+# }
+.macro mov_vector (%name)
+.data
+%name:
+.align 2
+	.word 0
+	.word 0
+	.word 0
+.end_macro
+
 .data
 # 35x35 Pacman Arena - Sprites 7x7
 grid:

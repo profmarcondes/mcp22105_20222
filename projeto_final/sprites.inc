@@ -56,13 +56,6 @@ apply_movement:
 #=============================================================
 
 #=============================================================
-# bool check_movement(animated_sprite*)
-check_movement:
-
-	jr   $ra
-#=============================================================
-
-#=============================================================
 # void set_move_animated_sprite(animated_sprite* sp, int vx, int vy)
 set_move_animated_sprite:
 	sw   $a1, 12($a0)
@@ -78,6 +71,26 @@ stop_animated_sprite:
 	jr   $ra
 #=============================================================
 
+#=============================================================
+# char get_grid_element(row-y, column-x, grid_table* )
+get_grid_element:
+	## Le o elemento na grid table e retorna.
+	jr  $ra
+#=============================================================
+
+#=============================================================
+# draw_grid(width, height, grid_table* )
+draw_grid:
+	
+	#Percorre a matriz da grid, para cada elemento
+	
+	## Pegar o id_do_sprite (get_grid_element)
+	## converter de ASCII para ID (-64)
+	## Chamar draw_sprite(grid pos -> pixel pos - multiplica {X|Y}_SCALE)
+	
+	jr   $ra
+#=============================================================
+
 # struct mov_vector {
 #    int valid;
 #    int mov_x;
@@ -87,6 +100,16 @@ stop_animated_sprite:
 # process_input(mov_vector *)
 process_input:
 
+    ## Verificar se key_rb está vazio
+    ## Se estiver, retornar
+	
+	## Senao
+	## Le valor do ringbuffer
+	
+	## Processa valor com teclas associadas ao
+	## movimento. Setar mov_vector e tornar
+	## válido	
+	
 	jr   $ra
 #=============================================================
 
@@ -94,19 +117,48 @@ process_input:
 # void try_change_movement(animated_sprite* sp, mov_vector* mv)
 try_change_movement:
 
+	## Verifica se muv_vector é válido
+	## Se não, retorna.
+
+	## Converte posição pixel para posicao grid
+	## Lembrete - se resto divisao == 0, está alinhado
+	
+	## Se não está alinhado, não muda o movimento.
+	## Retorna função.
+	
+	## Se alinhado, verifica se pode se mover para nova
+	## direção
+	
+	## Calculo nova posicao somando vetor movimento
+	## com posição do grid e pego elemento do grid
+	## para ver se não é parede.
+	
+	## Se não for parede, aplica vetor de movimento
+	## no sprite, caso contrário não faz nada
+	## Não esquecer de tornar o mov_vector inválido
+	## (valid = 0)
+	
 	jr   $ra
 #=============================================================
 
 #=============================================================
-# char get_grid_element(row, column, grid_table* )
-get_grid_element:
+# bool check_movement(animated_sprite*)
+check_movement:
 
-	jr   $ra
-#=============================================================
-
-#=============================================================
-# draw_grid(width, height, grid_table* )
-draw_grid:
+	## Converte posição pixel para posicao grid
+	## Lembrete - se resto divisao == 0, está alinhado
+	
+	## Se não está alinhado, pode se mover.
+	## Retorna verdadeiro
+	
+	## Calculo nova posicao somando vetor movimento
+	## com posição do grid e pego elemento do grid
+	## para ver se não é parede.
+	
+	## Se não é parede retorna verdadeiro
+	
+	## Se for parede, para o sprite (stop_animated_sprite)
+	## e retorna falso.
 
 	jr   $ra
 #=============================================================
