@@ -56,6 +56,13 @@ apply_movement:
 #=============================================================
 
 #=============================================================
+# bool check_movement(animated_sprite*)
+check_movement:
+
+	jr   $ra
+#=============================================================
+
+#=============================================================
 # void set_move_animated_sprite(animated_sprite* sp, int vx, int vy)
 set_move_animated_sprite:
 	sw   $a1, 12($a0)
@@ -71,9 +78,21 @@ stop_animated_sprite:
 	jr   $ra
 #=============================================================
 
+# struct mov_vector {
+#    int valid;
+#    int mov_x;
+#    int mov_y;
+# }
 #=============================================================
-# process_input(animated_sprite*)
+# process_input(mov_vector *)
 process_input:
+
+	jr   $ra
+#=============================================================
+
+#=============================================================   
+# void try_change_movement(animated_sprite* sp, mov_vector* mv)
+try_change_movement:
 
 	jr   $ra
 #=============================================================

@@ -9,6 +9,12 @@
     syscall
 .end_macro
 
+.macro syscall_sleep (%milli)
+    li $v0, 32
+    add $a0, $zero, %milli
+    syscall
+.end_macro
+
 .macro syscall_print_intReg (%intReg)
     li $v0, 1
     add $a0, $zero, %intReg
